@@ -20,6 +20,9 @@
 
 2. [计算机教育中缺失的一课](https://missing-semester-cn.github.io/)
 
+3. [Git、GitHub 和 Gitee 完整讲解：从基础到进阶功能](https://www.bilibili.com/video/BV1G8CFYvEjt/?share_source=copy_web&vd_source=cd2932e811b65858899b15b70169de9e)
+
+
 下载压缩文件及解压缩：推荐您安装并使用 [7-zip](https://7-zip.org/) 这款开源软件
 
 如何正确安装正版软件（以 Steam 为例）：[正版Steam如何下载？Steam下载｜安装｜注册｜使用全套流程](https://www.bilibili.com/video/BV15j411w7ER/?share_source=copy_web&vd_source=cd2932e811b65858899b15b70169de9e)
