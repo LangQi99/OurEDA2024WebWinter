@@ -254,10 +254,6 @@ DevEco Studio 提供了本地模拟器供开发者使用，可以根据官方教
 
 [创建模拟器-管理模拟器-使用模拟器运行应用/元服务-应用/元服务运行-DevEco Studio - 华为HarmonyOS开发者](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-emulator-create-V5)
 
-> [!WARNING]
->
-> 注意，安装模拟器是需要资格认证的，提交资料并审核通过后才可以安装，但官方教程并没有提到这一过程
-
 使用真机调试的官方教程
 
 [使用本地真机运行应用/元服务-应用/元服务运行-DevEco Studio - 华为HarmonyOS开发者](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/ide-run-device-V5)
