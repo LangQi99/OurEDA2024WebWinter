@@ -57,10 +57,13 @@ h1 {
 .tile.flip {
     transform-style: preserve-3d;
     transition: transform 0.6s;
+    transform: rotateX(180deg);
+    /* color: transparent; */
 }
 
 .tile.reveal {
-    transform: rotateX(180deg);
+    transform: rotateX(360deg);
+    /* color: white; */
 }
 
 .row {

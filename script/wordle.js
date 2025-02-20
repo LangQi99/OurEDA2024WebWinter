@@ -80,7 +80,21 @@ start();
  */
 function start() {
     initialize();
-    // TODO
+    render();
+
+    // 添加键盘点击事件监听
+    document.querySelectorAll(".key").forEach((key) => {
+        key.addEventListener("click", (e) => {
+            const keyValue = e.target.getAttribute("data-key");
+            handleKeyPress(keyValue);
+        });
+    });
+
+    // 添加重新开始按钮事件监听
+    document.getElementById("restart").addEventListener("click", () => {
+        initialize();
+        render();
+    });
 }
 
 /**
@@ -98,7 +112,86 @@ function start() {
  * 3. 应该在怎样的时刻调用 render 函数
  */
 function render() {
-    // TODO
+    // 更新棋盘显示
+    const board = document.getElementById("board");
+    const rows = board.getElementsByClassName("row");
+
+    // 渲染已猜测的单词
+    for (let i = 0; i < currentGuessTime; i++) {
+        const word = wordSequence[i];
+        const colors = colorSequence[i];
+        const tiles = rows[i].getElementsByClassName("tile");
+
+        for (let j = 0; j < answerLength; j++) {
+            const tile = tiles[j];
+            tile.textContent = word[j].toUpperCase();
+            // 添加翻转动画类
+
+            // 使用延迟来创建连续翻转效果
+            let delay = (j + 1) * 200; // 每个字母之间间隔200毫秒
+            setTimeout(() => {
+                // 设置颜色样式
+                tile.classList.add("flip");
+            }, delay - 200);
+            setTimeout(() => {
+                // 设置颜色样式
+                tile.classList.add("reveal");
+                if (colors[j] === green) {
+                    tile.classList.add("correct");
+                } else if (colors[j] === yellow) {
+                    tile.classList.add("present");
+                } else {
+                    tile.classList.add("absent");
+                }
+            }, delay);
+        }
+    }
+
+    // 渲染当前输入
+    if (currentGuessTime < maxGuessTime) {
+        const tiles = rows[currentGuessTime].getElementsByClassName("tile");
+        for (let i = 0; i < answerLength; i++) {
+            tiles[i].textContent =
+                i < guess.length ? guess[i].toUpperCase() : "";
+        }
+    }
+
+    // 更新键盘颜色
+    const keyElements = document.querySelectorAll(".key");
+    const keyColors = new Map();
+
+    // 收集所有已使用字母的最终颜色状态
+    for (let i = 0; i < colorSequence.length; i++) {
+        const word = wordSequence[i];
+        const colors = colorSequence[i];
+
+        for (let j = 0; j < word.length; j++) {
+            const letter = word[j].toUpperCase();
+            const color = colors[j];
+
+            if (
+                !keyColors.has(letter) ||
+                color === green ||
+                (color === yellow && keyColors.get(letter) === grey)
+            ) {
+                keyColors.set(letter, color);
+            }
+        }
+    }
+
+    keyElements.forEach((key) => {
+        const letter = key.getAttribute("data-key");
+        const color = keyColors.get(letter);
+
+        key.className = "key";
+        if (color === green) {
+            key.classList.add("correct");
+        } else if (color === yellow) {
+            key.classList.add("present");
+        } else if (color === grey) {
+            key.classList.add("absent");
+        }
+    });
 }
 
 /**
@@ -168,9 +261,11 @@ function isValidWord(word) {
  */
 function handleAnswer(guess) {
     guess = guess.toLowerCase();
-    colorSequence = calculateColorSequence(guess, answer);
-    const correctSequence = Array(answerLength).fill(green).join("");
-    if (colorSequence === correctSequence) {
+    const color = calculateColorSequence(guess, answer);
+    wordSequence.push(guess);
+    colorSequence.push(color);
+    const correctColor = Array(answerLength).fill(green).join("");
+    if (color === correctColor) {
         state = "SOLVED";
     } else if (currentGuessTime >= maxGuessTime) {
         state = "FAILED";
@@ -225,4 +320,23 @@ function calculateColorSequence(guess, answer) {
         }
     }
     return colorSequence.join("");
+}
+
+function handleKeyPress(key) {
+    if (state === "FAILED" || state === "SOLVED") return;
+    if (key === "ENTER") {
+        if (!isValidWord(guess)) {
+            return;
+        }
+        handleAnswer(guess);
+        guess = "";
+        currentGuessTime++;
+        render();
+    } else if (key === "BACKSPACE") {
+        guess = guess.slice(0, -1);
+        render();
+    } else if (guess.length < answerLength) {
+        guess += key.toLowerCase();
+        render();
+    }
 }
