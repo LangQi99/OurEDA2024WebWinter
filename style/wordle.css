@@ -1,1 +1,196 @@
 /* 您能且仅能在本文件中编写您的 CSS 代码 */
+header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #1a1a1b;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 10px;
+    border-bottom: 4px solid #6aaa64;
+    display: inline-block;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tile {
+    /* 基础样式 */
+    width: 60px;
+    height: 60px;
+    border: 2px solid #d3d6da;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+/* 绿色匹配状态 */
+.tile.correct {
+    background-color: #6aaa64;
+    color: white;
+    border-color: #6aaa64;
+}
+
+/* 黄色部分匹配状态 */
+.tile.present {
+    background-color: #c9b458;
+    color: white;
+    border-color: #c9b458;
+}
+
+/* 灰色未匹配状态 */
+.tile.absent {
+    background-color: #787c7e;
+    color: white;
+    border-color: #787c7e;
+}
+
+/* 添加翻转动画效果 */
+.tile.flip {
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.tile.reveal {
+    transform: rotateX(180deg);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 10px;
+}
+
+/* 键盘容器样式 */
+.keyboard-container {
+  margin-top: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.keyboard {
+  max-width: 500px;
+  width: 100%;
+}
+
+/* 键盘行样式 */
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+/* 按键基础样式 */
+.key {
+  height: 58px;
+  border-radius: 4px;
+  border: none;
+  background-color: #d3d6da;
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 40px;
+}
+
+/* Enter 和 Backspace 按键样式 */
+.key[data-key="ENTER"],
+.key[data-key="BACKSPACE"] {
+  min-width: 65px;
+  font-size: 0.875rem;
+}
+
+/* 按键状态样式 */
+.key.correct {
+  background-color: #6aaa64;
+  color: white;
+}
+
+.key.present {
+  background-color: #c9b458;
+  color: white;
+}
+
+.key.absent {
+  background-color: #787c7e;
+  color: white;
+}
+
+/* 按键悬停效果 */
+.key:hover {
+  opacity: 0.9;
+}
+
+/* 按键点击效果 */
+.key:active {
+  transform: scale(0.95);
+}
+
+#restart.restart-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background-color: #4CAF50; /* 按钮背景色 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    transform: scale(1);
+}
+
+#restart.restart-button:hover {
+    background-color: #45a049; /* 悬停时颜色变深 */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
+
+#restart.restart-button:active {
+    background-color: #3d8b40; /* 点击时颜色更深 */
+    transform: scale(0.95);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    #restart.restart-button {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
