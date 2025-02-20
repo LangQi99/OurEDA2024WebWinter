@@ -19,7 +19,9 @@
  * 2. let 和 const 关键字定义的变量有什么区别
  * 3. 已经被预定义的全局变量分别有怎样的作用
  */
-
+// uuid 本场游戏唯一标识 用于延迟动画的截断
+let uuid = crypto.randomUUID();
+// 读取静态数据
 const staticData = await fetch("/static/words.json").then((res) => res.json());
 // 固定的答案长度
 const answerLength = 5;
@@ -129,24 +131,41 @@ function render() {
 
             // 使用延迟来创建连续翻转效果
             let delay = (j + 1) * 200; // 每个字母之间间隔200毫秒
-            setTimeout(() => {
-                // 设置颜色样式
-                tile.classList.add("flip");
-            }, delay - 200);
-            setTimeout(() => {
-                // 设置颜色样式
-                tile.classList.add("reveal");
-                if (colors[j] === green) {
-                    tile.classList.add("correct");
-                } else if (colors[j] === yellow) {
-                    tile.classList.add("present");
-                } else {
-                    tile.classList.add("absent");
-                }
-            }, delay);
+            setTimeout(
+                (animId) => {
+                    if (animId !== uuid) return;
+                    // 设置颜色样式
+                    tile.classList.add("flip");
+                },
+                delay - 200,
+                uuid
+            );
+            setTimeout(
+                (animId) => {
+                    if (animId !== uuid) return;
+                    // 设置颜色样式
+                    tile.classList.add("reveal");
+                    if (colors[j] === green) {
+                        tile.classList.add("correct");
+                    } else if (colors[j] === yellow) {
+                        tile.classList.add("present");
+                    } else {
+                        tile.classList.add("absent");
+                    }
+                },
+                delay,
+                uuid
+            );
         }
     }
-
+    // 清空未轮到的行
+    for (let i = currentGuessTime; i < maxGuessTime; i++) {
+        const tiles = rows[i].getElementsByClassName("tile");
+        for (let j = 0; j < answerLength; j++) {
+            tiles[j].textContent = "";
+            tiles[j].classList = "tile";
+        }
+    }
     // 渲染当前输入
     if (currentGuessTime < maxGuessTime) {
         const tiles = rows[currentGuessTime].getElementsByClassName("tile");
@@ -204,11 +223,14 @@ function render() {
  * 2. 初始化时 state 变量处于怎样的状态
  */
 function initialize() {
+    uuid = crypto.randomUUID();
     answer = generateRandomAnswer();
     // TODO
     state = "UNFINISHED";
     currentGuessTime = 0;
     guess = "";
+    wordSequence = [];
+    colorSequence = [];
 }
 
 /**
