@@ -20,6 +20,7 @@
  * 3. 已经被预定义的全局变量分别有怎样的作用
  */
 
+const staticData = await fetch("/static/words.json").then((res) => res.json());
 // 固定的答案长度
 const answerLength = 5;
 // 最多尝试次数
@@ -112,6 +113,9 @@ function render() {
 function initialize() {
     answer = generateRandomAnswer();
     // TODO
+    state = "UNFINISHED";
+    currentGuessTime = 0;
+    guess = "";
 }
 
 /**
@@ -128,7 +132,9 @@ function initialize() {
  * @return {string} answer
  */
 function generateRandomAnswer() {
-    // TODO
+    const words = staticData.words;
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex];
 }
 
 /**
@@ -146,7 +152,8 @@ function generateRandomAnswer() {
  * @return {boolean} isValid
  */
 function isValidWord(word) {
-    // TODO
+    const words = staticData.words;
+    return words.includes(word);
 }
 
 /**
@@ -160,7 +167,14 @@ function isValidWord(word) {
  * @param {string} guess
  */
 function handleAnswer(guess) {
-    // TODO
+    guess = guess.toLowerCase();
+    colorSequence = calculateColorSequence(guess, answer);
+    const correctSequence = Array(answerLength).fill(green).join("");
+    if (colorSequence === correctSequence) {
+        state = "SOLVED";
+    } else if (currentGuessTime >= maxGuessTime) {
+        state = "FAILED";
+    }
 }
 
 /**
@@ -182,5 +196,33 @@ function handleAnswer(guess) {
  * @return {string} colorSequence
  */
 function calculateColorSequence(guess, answer) {
-    // TODO
+    // Time: 1019ms Passed: 213 Failed: 0
+    // https://www.codewars.com/kata/62013b174c72240016600e60/train/javascript
+    let colorSequence = Array(answerLength).fill(grey);
+    let matchDict = {};
+    let countDict = {};
+    for (let c = "a"; c <= "z"; c = String.fromCharCode(c.charCodeAt(0) + 1)) {
+        matchDict[c] = 0;
+        countDict[c] = 0;
+    }
+    for (let i = 0; i < answer.length; i++) {
+        countDict[answer[i]]++;
+    }
+    for (let i = 0; i < guess.length; i++) {
+        if (guess[i] === answer[i]) {
+            colorSequence[i] = green;
+            matchDict[guess[i]]++;
+        }
+    }
+    for (let i = 0; i < guess.length; i++) {
+        if (
+            guess[i] !== answer[i] &&
+            answer.includes(guess[i]) &&
+            matchDict[guess[i]] < countDict[guess[i]]
+        ) {
+            colorSequence[i] = yellow;
+            matchDict[guess[i]]++;
+        }
+    }
+    return colorSequence.join("");
 }
