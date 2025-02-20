@@ -1,3 +1,5 @@
+# 项目已部署于 [github pages](https://langqi99.github.io/OurEDA2024WebWinter/)
+
 # OurEDA 实验室 2024 级 Web 方向寒假作业
 
 *22-ly*
@@ -17,11 +19,8 @@
 计算机“高级”操作扫盲：
 
 1. [电子扫盲 - 华东师范大学 - 博远信息技术社](https://www.bilibili.com/video/BV1JkzGYuEGo/?share_source=copy_web&vd_source=cd2932e811b65858899b15b70169de9e)
-
 2. [计算机教育中缺失的一课](https://missing-semester-cn.github.io/)
-
 3. [Git、GitHub 和 Gitee 完整讲解：从基础到进阶功能](https://www.bilibili.com/video/BV1G8CFYvEjt/?share_source=copy_web&vd_source=cd2932e811b65858899b15b70169de9e)
-
 
 下载压缩文件及解压缩：推荐您安装并使用 [7-zip](https://7-zip.org/) 这款开源软件
 
@@ -74,7 +73,7 @@
 
 推荐您通过以下途径学习 `HTML` 的基本知识：
 
--   [MDN/HTML](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
+- [MDN/HTML](https://developer.mozilla.org/zh-CN/docs/Web/HTML)
 
 ### 学习 CSS
 
@@ -82,8 +81,8 @@
 
 推荐您通过以下途径学习 `CSS` 的基本知识：
 
--   [MDN/CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
--   [Learn Layout](https://zh.learnlayout.com/)
+- [MDN/CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
+- [Learn Layout](https://zh.learnlayout.com/)
 
 ### 学习 JavaScript
 
@@ -95,9 +94,9 @@
 
 推荐您通过以下途径学习 `JavaScript` 的基本知识:
 
--   [MDN/JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
--   [现代 JavaScript 教程](https://zh.javascript.info/)
--   [JavaScript 教程 - 网道](https://wangdoc.com/javascript/)
+- [MDN/JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
+- [现代 JavaScript 教程](https://zh.javascript.info/)
+- [JavaScript 教程 - 网道](https://wangdoc.com/javascript/)
 
 ### 具体任务
 

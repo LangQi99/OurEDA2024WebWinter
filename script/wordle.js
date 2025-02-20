@@ -22,7 +22,9 @@
 // uuid 本场游戏唯一标识 用于延迟动画的截断
 let uuid = crypto.randomUUID();
 // 读取静态数据
-const staticData = await fetch("/static/words.json").then((res) => res.json());
+const staticData = await fetch("../static/words.json").then((res) =>
+    res.json()
+);
 // 固定的答案长度
 const answerLength = 5;
 // 最多尝试次数
