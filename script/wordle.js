@@ -348,6 +348,7 @@ function handleKeyPress(key) {
     if (state === "FAILED" || state === "SOLVED") return;
     if (key === "ENTER") {
         if (!isValidWord(guess)) {
+            showInvalidWordAnimation("单词不存在");
             return;
         }
         handleAnswer(guess);
@@ -361,4 +362,20 @@ function handleKeyPress(key) {
         guess += key.toLowerCase();
         render();
     }
+}
+
+function showInvalidWordAnimation(message) {
+    const messageElement = document.getElementById("message");
+    messageElement.textContent = message;
+    const currentRow = document.querySelectorAll(".row")[currentGuessTime];
+    const tiles = currentRow.querySelectorAll(".tile");
+    tiles.forEach(tile => {
+        tile.classList.add("shake");
+        setTimeout(() => {
+            tile.classList.remove("shake");
+        }, 500);
+    });
+    setTimeout(() => {
+        messageElement.textContent = "";
+    }, 3000);
 }
