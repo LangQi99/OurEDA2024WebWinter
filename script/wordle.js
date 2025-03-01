@@ -97,6 +97,11 @@ function start() {
         initialize();
         render();
     });
+    
+    // 添加查看答案按钮事件监听
+    document.getElementById("show-answer").addEventListener("click", () => {
+        showAnswer();
+    });
 }
 
 /**
@@ -367,15 +372,36 @@ function handleKeyPress(key) {
 function showInvalidWordAnimation(message) {
     const messageElement = document.getElementById("message");
     messageElement.textContent = message;
+    messageElement.style.color = "#ef5350";
     const currentRow = document.querySelectorAll(".row")[currentGuessTime];
     const tiles = currentRow.querySelectorAll(".tile");
+    // 比UUID更可靠的方式
     tiles.forEach(tile => {
+        if (tile.shakeTimeoutId) {
+            clearTimeout(tile.shakeTimeoutId);
+            tile.classList.remove("shake");
+        }
         tile.classList.add("shake");
-        setTimeout(() => {
+        tile.shakeTimeoutId = setTimeout(() => {
             tile.classList.remove("shake");
         }, 500);
     });
-    setTimeout(() => {
+    if (messageElement.timeoutId) {
+        clearTimeout(messageElement.timeoutId);
+    }
+    messageElement.timeoutId = setTimeout(() => {
         messageElement.textContent = "";
-    }, 3000);
+    }, 500);
+}
+
+function showAnswer() {
+    const messageElement = document.getElementById("message");
+    messageElement.style.color = "#000000";
+    messageElement.textContent = `答案是: ${answer.toUpperCase()}`;
+    if (messageElement.timeoutId) {
+        clearTimeout(messageElement.timeoutId);
+    }
+    messageElement.timeoutId = setTimeout(() => {
+        messageElement.textContent = "";
+    }, 5000);
 }
